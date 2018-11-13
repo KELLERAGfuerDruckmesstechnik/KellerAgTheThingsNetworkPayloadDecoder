@@ -5,10 +5,10 @@ To use it:
  * Step 1: Open console.thethingsnetwork.org and go to your "application" 
 
  * Step 2: Choose "Payload Formats"
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "https://console.thethingsnetwork.org/applications/{your_application_name}/payload-formats")
+![alt text](https://raw.githubusercontent.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/master/TheThingsNetworkApplicationPayloadFormat.png "https://console.thethingsnetwork.org/applications/{your_application_name}/payload-formats")
 
  * Step 3: Copy-Paste the source code from PayloadDecoderFunction.js into the [Payload  formats] -> [decoder] text box and press the [save payload function] button:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "TheThingsNetworkApplicationPayloadFormat.png")
+![alt text](https://raw.githubusercontent.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/master/ExamplePayloadFunctionInTTN.png "TheThingsNetworkApplicationPayloadFormat.png")
  * Step 4: Verify by entering an example Payload string such as: ```010500D3BF7845343C5FE44041AE22803F7BC4B141A86666```
  this should result into:
  ```json
