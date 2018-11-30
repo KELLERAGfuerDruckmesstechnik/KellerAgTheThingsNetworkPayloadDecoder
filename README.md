@@ -19,6 +19,7 @@ To use it:
   "Channel_4": 0.9834700226783752,
   "Channel_5": 21.049999237060547,
   "channel": "0000000011010011",
+  "channelCount": 5,
   "ct": 5,
   "func": 1,
   "payload": "AQUA0794RTQ8X+RAQa4igD97xLFBqGZm"
