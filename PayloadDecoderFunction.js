@@ -1,14 +1,13 @@
 function Decoder(bytes, port) {  
-  var channelCount = bytes.length/4 - 1;
   var result = {
     func: bytes[0],
     ct: bytes[1],
     channel: bytesToInt([bytes[2], bytes[3]], false),
-    channelCount: channelCount,
+    channelCount: bytes.length/4 - 1,
     payload : bytes, 
   };
 
-  for (var i = 1; i <= channelCount; i++) {
+  for (var i = 1; i <= result.channelCount; i++) {
     var MSBIndex = i * 4;
     var byteValue = bytes.slice(MSBIndex, MSBIndex + 4);
 
