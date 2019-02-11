@@ -1,5 +1,7 @@
 # KellerAgTheThingsNetworkPayloadDecoder
-Payload decoder function to decode a LoRa payload from a KELLER device to meaningful values viewable on console.thethingsnetwork.org
+Payload decoder function to decode a LoRa payload from a KELLER device to meaningful values viewable on console.thethingsnetwork.org  
+
+For a more detailed explanation please please visit to https://docs.kolibricloud.ch/sending-technology/lora-technology/keller-lora-payload/
 
 To use it:
  * Step 1: Open console.thethingsnetwork.org and go to your "application" 
