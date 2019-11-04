@@ -5,6 +5,7 @@ function Decoder(bytes, port) {
         channel: bytesToInt(bytes.slice(2, 4)),
         channelCount: bytes.length / 4 - 1,
         payload: bytes,
+        portNumber: port
     };
 
     for (var i = 1; i <= result.channelCount; i++) {
