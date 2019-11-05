@@ -1,3 +1,4 @@
+// Entry Point of decoding
 function Decoder(bytes, port) {
     var functionCode = bytes[0];
     var result = {
@@ -7,14 +8,17 @@ function Decoder(bytes, port) {
     };
 
     if (functionCode === 12) {
+        // Device sends information package, has to be decoded differently
         fillupDecodedDeviceInformation(bytes, result);
     } else {
+        // Device sends measurement package
         fillupDecodedMeasurements(bytes, result);
     }
 
     return result;
 }
 
+// Decode the device information package and append it to the result object
 function fillupDecodedDeviceInformation(bytes, result) {
     result.battery_voltage = bytesToFloat(bytes.slice(14, 18));
     result.battery_capacity_percentage = bytes[18];
@@ -25,11 +29,15 @@ function fillupDecodedDeviceInformation(bytes, result) {
     result.device_local_datetime = bytesToDate(bytes.slice(10, 14));
 }
 
+// Decode the device measurement package and append it to the result object
 function fillupDecodedMeasurements(bytes, result) {
+    // ct = connection type
     result.ct = bytes[1];
     result.channel = bytesToBinaryString(bytes.slice(2, 4), 2);
     result.channelCount = result.channel.match(/1/g).length;
 
+    // Loop throug all additional package content. Every group of 4 Bytes 
+    // contains information for another channel (Channel 1, Channel 2, ...)
     for (var i = 1; i <= result.channelCount; i++) {
         var msbIndex = i * 4;
         var byteValue = bytes.slice(msbIndex, msbIndex + 4);
@@ -38,6 +46,7 @@ function fillupDecodedMeasurements(bytes, result) {
     }
 }
 
+// Convert an array of bytes into a float: bytesToFloat([ 0x3B, 0x2F, 0x7A, 0x1A ]) => 0.0026775659061968327
 // Based on https://stackoverflow.com/a/37471538 by Ilya Bursov
 function bytesToFloat(bytes) {
     // JavaScript bitwise operators yield a 32 bits integer, not a float.
@@ -50,6 +59,7 @@ function bytesToFloat(bytes) {
     return f;
 }
 
+// Convert an array of bytes into a binary string: bytesToBinaryString([ 0x25, 0x4D, 0x4F, 0xCA ]) => '00100101010011010100111111001010'
 function bytesToBinaryString(bytes) {
     var binary = '';
 
@@ -66,26 +76,30 @@ function bytesToBinaryString(bytes) {
     return binary;
 }
 
+// Convert an array of bytes into an integer: bytesToInt([ 0x25, 0x4D, 0x4F, 0xCA ]) => 625823690
 function bytesToInt(bytes) {
     var binaryString = bytesToBinaryString(bytes);
     return parseInt(binaryString, 2);
 }
 
+// Convert an array of bytes into a UTC date. The bytes array must represent 
+// the number of seconds since "2000-01-01T00:00:00.000": bytesToDate([ 0x25, 0x4D, 0x4F, 0xCA ]) => 2019-10-31 07:54:50
 function bytesToDate(bytes) {
-    var zero = new Date('2000-01-01T00:00:00.000Z');
-    var time = bytesToInt(bytes);
-    var date = new Date(zero.getTime() + time * 1000);
+    var zero = new Date('2000-01-01T00:00:00.000Z').getTime();
+    var time = bytesToInt(bytes) * 1000;
+    var date = new Date(zero + time);
 
     var year = date.getUTCFullYear();
-    var month = date.getUTCMonth() + 1;
-    var day = date.getUTCDate();
-    var hours = date.getUTCHours();
-    var minutes = date.getUTCMinutes();
-    var seconds = date.getUTCSeconds();
+    var month = pad(date.getUTCMonth() + 1, 2);
+    var day = pad(date.getUTCDate(), 1);
+    var hours = pad(date.getUTCHours(), 2);
+    var minutes = pad(date.getUTCMinutes(), 2);
+    var seconds = pad(date.getUTCSeconds(), 2);
 
-    return year + '-' + pad(month, 2) + '-' + pad(day, 2) + ' ' + pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2);
+    return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 }
 
+// Prepends a number of "0" to a parameter. pad(7, 2) => '07'
 function pad(num, size) {
     var s = num.toString();
     while (s.length < size) s = '0' + s;
