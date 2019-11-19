@@ -1,6 +1,6 @@
 # KellerAgTheThingsNetworkPayloadDecoder
 
-[![Build Status](https://kellerdruck.visualstudio.com/Keller%20Cloud/_apis/build/status/cBashTN.Kolibri-Cloud-API-daemon-example-with-access-token?branchName=master)](https://kellerdruck.visualstudio.com/Keller%20Cloud/_build/latest?definitionId=35&branchName=master)
+[![Build Status](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/workflows/Node%20Testing/badge.svg)](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/actions)
 
 Payload decoder function to decode a LoRa payload from a KELLER device to meaningful values viewable on console.thethingsnetwork.org  
 
