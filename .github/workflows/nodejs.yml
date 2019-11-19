@@ -20,6 +20,6 @@ jobs:
     - name: npm install, build, and test
       run: |
         npm install -g jasmine
-        jasmine .\spec\PayloadDecoceFunction.spec.js
+        jasmine --config=spec/jasmine.json
       env:
         CI: true
