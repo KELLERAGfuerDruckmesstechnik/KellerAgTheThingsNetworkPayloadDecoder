@@ -35,6 +35,8 @@ function fillupDecodedMeasurements(bytes, result) {
     result.ct = bytes[1];
     result.channel = bytesToBinaryString(bytes.slice(2, 4), 2);
     result.channelCount = result.channel.match(/1/g).length;
+    var channelsReverted = result.channel.split("").reverse().join("");
+    var firstIndex = channelsReverted.indexOf('1');
 
     // Loop throug all additional package content. Every group of 4 Bytes 
     // contains information for another channel (Channel 1, Channel 2, ...)
@@ -42,7 +44,8 @@ function fillupDecodedMeasurements(bytes, result) {
         var msbIndex = i * 4;
         var byteValue = bytes.slice(msbIndex, msbIndex + 4);
 
-        result[deviceTypesToChannelNames[result.ct][i - 1]] = bytesToFloat(byteValue);
+        result[deviceTypesToChannelNames[result.ct][firstIndex]] = bytesToFloat(byteValue);
+        firstIndex = channelsReverted.indexOf('1', firstIndex + 1);
     }
 }
 
@@ -79,6 +82,9 @@ function bytesToBinaryString(bytes) {
 // Convert an array of bytes into an integer: bytesToInt([ 0x25, 0x4D, 0x4F, 0xCA ]) => 625823690
 function bytesToInt(bytes) {
     var binaryString = bytesToBinaryString(bytes);
+    if (binaryString.length == 0) {
+        return 0;
+    }
     return parseInt(binaryString, 2);
 }
 
@@ -91,7 +97,7 @@ function bytesToDate(bytes) {
 
     var year = date.getUTCFullYear();
     var month = pad(date.getUTCMonth() + 1, 2);
-    var day = pad(date.getUTCDate(), 1);
+    var day = pad(date.getUTCDate(), 2);
     var hours = pad(date.getUTCHours(), 2);
     var minutes = pad(date.getUTCMinutes(), 2);
     var seconds = pad(date.getUTCSeconds(), 2);
