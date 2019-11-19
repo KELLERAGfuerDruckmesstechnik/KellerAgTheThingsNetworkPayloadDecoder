@@ -1,6 +1,6 @@
 # KellerAgTheThingsNetworkPayloadDecoder
 
-[![Build Status](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/workflows/Node%20Testing/badge.svg)](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/actions)
+[![Build Status](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/workflows/Node%20Testing/badge.svg)](https://github.com/KELLERAGfuerDruckmesstechnik/KellerAgTheThingsNetworkPayloadDecoder/actions?query=workflow%3A%22Node+Testing%22)
 
 Payload decoder function to decode a LoRa payload from a KELLER device to meaningful values viewable on console.thethingsnetwork.org  
 
