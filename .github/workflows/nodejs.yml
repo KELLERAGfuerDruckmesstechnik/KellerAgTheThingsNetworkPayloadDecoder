@@ -1,4 +1,4 @@
-name: Node Testing
+name: Testing
 
 on: [push]
 
@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
+    - name: install jasmine, and test
       run: |
         npm install -g jasmine
         jasmine --config=spec/jasmine.json
