@@ -10,7 +10,8 @@ function decodeUplink(input) {
 
     if (functionCode === 12) {
         fillUpDecodedDeviceInformation(bytes, decoded); // Device sends information package, has to be decoded differently
-    } else if (functionCode === 1) {
+    } 
+    else if (functionCode === 1) {
         fillUpDecodedMeasurements(bytes, decoded); // Device sends measurement package
     } else {
         return {
@@ -20,9 +21,7 @@ function decodeUplink(input) {
     }
 
     return {
-        data: {
-            bytes: decoded
-        },
+        data: decoded,
         warnings: [],
         errors: []
     };

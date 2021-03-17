@@ -6,7 +6,7 @@ describe('ttn-v3-payload-decoder', function() {
         var payload = [0x0C, 0x01, 0x13, 0x00, 0x13, 0x26, 0x00, 0x00, 0x00, 0x01, 0x25, 0x4D, 0x4F, 0xCA, 0x40, 0xA4, 0xFC, 0x2B, 0x0D, 0x10];
         var input = { bytes : payload, fPort : 4 }
         var result = decodeUplink(input);
-  
+
         expect(result).toEqual({'data':{
             'func': 12,
             'port': 4,
