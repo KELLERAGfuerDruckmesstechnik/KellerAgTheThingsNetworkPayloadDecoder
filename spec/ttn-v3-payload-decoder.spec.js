@@ -7,7 +7,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = { bytes : payload, fPort : 4 }
         var result = decodeUplink(input);
   
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'func': 12,
             'port': 4,
             'payload': '0C011300132600000001254D4FCA40A4FC2B0D10',
@@ -18,7 +18,7 @@ describe('ttn-v3-payload-decoder', function() {
             'sw_version_text': '19.38',
             'serial_number': 1,
             'device_local_datetime': '2019-10-31 07:54:50'
-        });
+        }});
     });
 
     it('should decode a given payload correctly (2/6)', function() {  
@@ -26,7 +26,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = {bytes : payload, fPort : 1}
         var result = decodeUplink(input);
   
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'func': 1,
             'port': 1,
             'payload': '010200D3FFFFFFFF3C772CAC41AF51803F7170F841AACCCD',
@@ -38,7 +38,7 @@ describe('ttn-v3-payload-decoder', function() {
             'TOB1': 21.914794921875,
             'PBaro': 0.9431300163269043,
             'TBaro': 21.350000381469727
-        });
+        }});
     });
 
     it('should decode a given payload correctly (3/6)', function() {  
@@ -46,7 +46,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = {bytes : payload, fPort : 1}
         var result = decodeUplink(input);
   
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'func': 1,
             'port': 1,
             'payload': '01090CD7FFFFFFFF3A99F800FFFFFFFF41A1C4303F778FEF41AA147B3B4366A93B2F7A1A',
@@ -61,7 +61,7 @@ describe('ttn-v3-payload-decoder', function() {
             'TBaro': 21.260000228881836,
             'Conductivity Tc': 0.0029815828893333673,
             'Conductivity raw': 0.0026775659061968327
-        });
+        }});
     });
 
     it('should decode a given payload correctly (4/6)', function() {  
@@ -69,7 +69,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = {bytes : payload, fPort : 1}
         var result = decodeUplink(input);
   
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'P1': 0.000640869140625,
             'PBaro': 0.9628300070762634,
             'TBaro': 22.81999969482422,
@@ -80,7 +80,7 @@ describe('ttn-v3-payload-decoder', function() {
             'func': 1,
             'payload': '010200D23A28000041B466663F767C0741B68F5C',
             'port': 1
-        });
+        }});
     });
 
     it('should decode a given payload correctly (5/6)', function() {
@@ -88,7 +88,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = {bytes : payload, fPort : 1}
         var result = decodeUplink(input);
 
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'Pd (P1-PBaro)': -6.805646932770577e+38,
             'P1': -0.00027476251125335693,
             'TOB1': 21.813232421875,
@@ -100,7 +100,7 @@ describe('ttn-v3-payload-decoder', function() {
             'ct': 2,
             'channel': '0000000011010011',
             'channelCount': 5
-        });
+        }});
     });
 
     it('should decode a given payload correctly (6/6)', function() {
@@ -108,7 +108,7 @@ describe('ttn-v3-payload-decoder', function() {
         var input = {bytes : payload, fPort : 1}
         var result = decodeUplink(input);
 
-        expect(result).toEqual({
+        expect(result).toEqual({'data':{
             'P1': 0.013665258884429932,
             'PBaro': 0.9834700226783752,
             'Pd (P1-PBaro)': -0.9698059558868408,
@@ -120,58 +120,58 @@ describe('ttn-v3-payload-decoder', function() {
             'func': 1,
             'payload': '010500D3BF7845343C5FE44041AE22803F7BC4B141A86666',
             'port': 1
-        });
+        }});
     });
 
-    it('should convert bytes to float corrrectly', function() {
+    it('should convert bytes to float correctly', function() {
         var bytes = [ 0x3A, 0x99, 0xF8, 0x00 ];
 
         expect(bytesToFloat(bytes)).toBe(0.0011746883392333984);
     });
 
-    it('should convert an empty byte array to float corrrectly', function() {
+    it('should convert an empty byte array to float correctly', function() {
         var bytes = [ ];
 
         expect(bytesToFloat(bytes)).toBe(0);
     });
 
-    it('should convert bytes to binary string corrrectly', function() {
+    it('should convert bytes to binary string correctly', function() {
         var bytes = [ 0x3A, 0x99, 0xF8, 0x00 ];
 
         expect(bytesToBinaryString(bytes)).toBe('00111010100110011111100000000000');
     });
 
-    it('should convert an empty byte array to binary string corrrectly', function() {
+    it('should convert an empty byte array to binary string correctly', function() {
         var bytes = [ ];
 
         expect(bytesToBinaryString(bytes)).toBe('');
     });
 
-    it('should convert bytes to int corrrectly', function() {
+    it('should convert bytes to int correctly', function() {
         var bytes = [ 0x3A, 0x99, 0xF8, 0x00 ];
 
         expect(bytesToInt(bytes)).toBe(983169024);
     });
 
-    it('should convert an empty byte array to int corrrectly', function() {
+    it('should convert an empty byte array to int correctly', function() {
         var bytes = [ ];
 
         expect(bytesToInt(bytes)).toBe(0);
     });
 
-    it('should convert bytes to date corrrectly', function() {
+    it('should convert bytes to date correctly', function() {
         var bytes = [ 0x25, 0x4D, 0x4F, 0xCA ];
 
         expect(bytesToDate(bytes)).toBe('2019-10-31 07:54:50');
     });
 
-    it('should convert an empty byte array to date corrrectly', function() {
+    it('should convert an empty byte array to date correctly', function() {
         var bytes = [ ];
 
         expect(bytesToDate(bytes)).toBe('2000-01-01 00:00:00');
     });
 
-    it('should convert pad corrrectly', function() {
+    it('should convert pad correctly', function() {
         expect(pad(2, 2)).toBe('02');
     });
 });
