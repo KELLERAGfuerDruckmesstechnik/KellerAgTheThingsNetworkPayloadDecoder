@@ -1,25 +1,53 @@
-// Entry Point of decoding
-function Decoder(bytes, port) {
+function decodeUplink(input) {
+    var port = input.fPort;
+    var bytes = input.bytes;
     var functionCode = bytes[0];
-    var result = {
+    var decoded = {
         func: functionCode,
         port: port,
         payload: bytes.map(function (byte) { return pad(byte.toString(16).toUpperCase(), 2); }).join('')
     };
 
     if (functionCode === 12) {
-        // Device sends information package, has to be decoded differently
-        fillupDecodedDeviceInformation(bytes, result);
+        fillUpDecodedDeviceInformation(bytes, decoded); // Device sends information package, has to be decoded differently
+    } else if (functionCode === 1) {
+        fillUpDecodedMeasurements(bytes, decoded); // Device sends measurement package
     } else {
-        // Device sends measurement package
-        fillupDecodedMeasurements(bytes, result);
+        return {
+            data: decoded,
+            warnings: ["This function code is not supported in this decoder."]
+        }
     }
 
-    return result;
+    return {
+        data: {
+            bytes: decoded
+        },
+        warnings: [],
+        errors: []
+    };
 }
 
+//function encodeDownlink(input) {
+//  return {
+//    data: {
+//      bytes: input.bytes
+//    },
+//      warnings: ["Encoding of downlink is not supported by the JS decoder. Yet, it is possible to use downlink telegrams using the correct payload (https://docs.kolibricloud.ch/sending-technology/ADT1%20LoRa%20data%20communication%20protocol%2002_2020.pdf)"]
+//    }
+//}
+//
+//function decodeDownlink(input) {
+//    return {
+//    data: {
+//      bytes: input.bytes
+//      },
+//        warnings: ["Decoding of downlink is not supported by the JS decoder. Yet, it is possible to use downlink telegrams using the correct payload (https://docs.kolibricloud.ch/sending-technology/ADT1%20LoRa%20data%20communication%20protocol%2002_2020.pdf)"]
+//      }
+//}
+
 // Decode the device information package and append it to the result object
-function fillupDecodedDeviceInformation(bytes, result) {
+function fillUpDecodedDeviceInformation(bytes, result) {
     result.battery_voltage = bytesToFloat(bytes.slice(14, 18));
     result.battery_capacity_percentage = bytes[18];
     result.humidity_percentage = bytes[19];
@@ -30,7 +58,7 @@ function fillupDecodedDeviceInformation(bytes, result) {
 }
 
 // Decode the device measurement package and append it to the result object
-function fillupDecodedMeasurements(bytes, result) {
+function fillUpDecodedMeasurements(bytes, result) {
     // ct = connection type
     result.ct = bytes[1];
     result.channel = bytesToBinaryString(bytes.slice(2, 4), 2);
@@ -38,7 +66,7 @@ function fillupDecodedMeasurements(bytes, result) {
     var channelsReverted = result.channel.split("").reverse().join("");
     var firstIndex = channelsReverted.indexOf('1');
 
-    // Loop throug all additional package content. Every group of 4 Bytes 
+    // Loop through all additional package content. Every group of 4 Bytes
     // contains information for another channel (Channel 1, Channel 2, ...)
     for (var i = 1; i <= result.channelCount; i++) {
         var msbIndex = i * 4;
@@ -88,7 +116,7 @@ function bytesToInt(bytes) {
     return parseInt(binaryString, 2);
 }
 
-// Convert an array of bytes into a UTC date. The bytes array must represent 
+// Convert an array of bytes into a UTC date. The bytes array must represent
 // the number of seconds since "2000-01-01T00:00:00.000": bytesToDate([ 0x25, 0x4D, 0x4F, 0xCA ]) => 2019-10-31 07:54:50
 function bytesToDate(bytes) {
     var zero = new Date('2000-01-01T00:00:00.000Z').getTime();
