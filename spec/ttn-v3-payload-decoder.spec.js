@@ -18,7 +18,7 @@ describe('ttn-v3-payload-decoder', function() {
             'sw_version_text': '19.38',
             'serial_number': 1,
             'device_local_datetime': '2019-10-31 07:54:50'
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should decode a given payload correctly (2/6)', function() {  
@@ -38,7 +38,7 @@ describe('ttn-v3-payload-decoder', function() {
             'TOB1': 21.914794921875,
             'PBaro': 0.9431300163269043,
             'TBaro': 21.350000381469727
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should decode a given payload correctly (3/6)', function() {  
@@ -61,7 +61,7 @@ describe('ttn-v3-payload-decoder', function() {
             'TBaro': 21.260000228881836,
             'Conductivity Tc': 0.0029815828893333673,
             'Conductivity raw': 0.0026775659061968327
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should decode a given payload correctly (4/6)', function() {  
@@ -80,7 +80,7 @@ describe('ttn-v3-payload-decoder', function() {
             'func': 1,
             'payload': '010200D23A28000041B466663F767C0741B68F5C',
             'port': 1
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should decode a given payload correctly (5/6)', function() {
@@ -100,7 +100,7 @@ describe('ttn-v3-payload-decoder', function() {
             'ct': 2,
             'channel': '0000000011010011',
             'channelCount': 5
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should decode a given payload correctly (6/6)', function() {
@@ -120,7 +120,7 @@ describe('ttn-v3-payload-decoder', function() {
             'func': 1,
             'payload': '010500D3BF7845343C5FE44041AE22803F7BC4B141A86666',
             'port': 1
-        }});
+        },warnings: [],errors: []});
     });
 
     it('should convert bytes to float correctly', function() {
