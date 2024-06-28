@@ -5,7 +5,7 @@
 Payload decoder function to decode a LoRa payload from a KELLER device to meaningful values viewable on the TTN console.
 
 ## TTN V3 portal - https://eu1.cloud.thethings.network/console
-For a more detailed explanation of the payload format please visit <https://docs.kolibricloud.ch/sending-technology/lora-technology/keller-lora-payload/>
+For a more detailed explanation of the payload format please visit <https://docs.pressuresuite.com/sending-technology/lora-technology/keller-lora-payload/>
 
 To use the decoder please follow this:
 
@@ -16,7 +16,7 @@ To use the decoder please follow this:
   4. Verify the working decoder in the **Live data** viewer
 
 ## TTN V2 portal - https://console.thethingsnetwork.org
-For a more detailed explanation of the payload format please visit <https://docs.kolibricloud.ch/sending-technology/lora-technology/keller-lora-payload/>
+For a more detailed explanation of the payload format please visit <https://docs.pressuresuite.com/sending-technology/lora-technology/keller-lora-payload/>
 
 To use the decoder please follow this:
 
